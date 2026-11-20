@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wikiler"
+version = "0.1.0"
+description = "A local-first knowledge compiler that turns personal research and engineering sources into an interlinked, source-grounded wiki, with an LLM agent for judgment and a deterministic engine for structure."
+requires-python = ">=3.10"
+dependencies = []
+license = {text = "MIT"}
+readme = "README.md"
+
+[project.scripts]
+wiki = "wikiler.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["wikiler*"]
+
+[tool.setuptools.package-data]
+wikiler = ["runtime_rules.md", ".agents/skills/wiki-*/SKILL.md"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "build>=0.10",
+    "twine>=4.0",
+]

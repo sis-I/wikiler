@@ -1,0 +1,20 @@
+# Python environment
+.venv/
+venv/
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Pytest caches
+.pytest_cache/
+
+# Personal vault paths
+/raw/
+/wiki/
+/output/
+/.obsidian/
+/.pi/
+
+# Temporary files
+**tmp/
