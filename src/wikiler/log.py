@@ -14,6 +14,11 @@ from .vault import vault_paths
 
 LOG_ENTRY_FMT = "## [{date}] {op} | {title}"
 
+# The closed vocabulary of log operation names, locked by the normative vault
+# contract. The engine emits setup, ingest, sync, and lint; query and
+# synthesis entries are authored by the agent.
+LOG_OPERATIONS = ("setup", "ingest", "query", "synthesis", "sync", "lint")
+
 
 def today():
     """Return today's date as an ISO string (YYYY-MM-DD)."""

@@ -1,5 +1,23 @@
 # Changelog
 
+## [Unreleased]
+
+No engine form checks changed and the version stays `0.1.0`.
+
+### Added
+- ADR-0002 recording the accepted normative vault contract decision
+- Root `GLOSSARY.md` with the twelve vault terms, definitions only
+- Contract tests for the ten locked areas, the Dash Rule, and byte parity
+- Parity tests for the six frontmatter fields, five page types, five
+  directories, the filename regex, and the log vocabulary
+
+### Changed
+- `src/wikiler/runtime_rules.md` states all ten locked areas, the two-tier
+  wikilink rule, and the Dash Rule; bare stem and `wiki/` prefixed links are
+  now described as non-canonical, accepted for migration
+- `examples/vault/AGENTS.md` regenerated to match `runtime_rules.md` byte for byte
+- The `init` index template uses a comma instead of an em-dash
+
 ## [0.1.0] 2026-11-20
 
 ### Added

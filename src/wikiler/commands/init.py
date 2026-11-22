@@ -7,7 +7,7 @@ from ..log import append_log_entry
 
 INDEX_TEMPLATE = """# Wiki Index
 
-Content catalog — one line per page, categorized.
+Content catalog, one line per page, categorized.
 
 ## Sources
 
