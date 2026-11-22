@@ -142,6 +142,21 @@ class TestMainDispatcher(unittest.TestCase):
         finally:
             self._cleanup(tmp)
 
+    def test_init_creates_topic_directories(self):
+        rc, tmp = self._run(["init"])
+        try:
+            self.assertEqual(rc, 0)
+            raw = Path(tmp) / "raw"
+            for topic in ("articles", "papers", "repos", "datasets"):
+                with self.subTest(topic=topic):
+                    self.assertTrue(
+                        (raw / topic).is_dir(),
+                        f"init must create raw/{topic}/",
+                    )
+            self.assertTrue((raw / "assets").is_dir())
+        finally:
+            self._cleanup(tmp)
+
     def test_init_idempotent(self):
         rc, tmp = self._run(["init"])
         try:

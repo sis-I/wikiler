@@ -12,6 +12,10 @@ import os
 
 VAULT_SUBDIRS = [
     "raw",
+    "raw/articles",
+    "raw/papers",
+    "raw/repos",
+    "raw/datasets",
     "raw/assets",
     "wiki",
     "wiki/sources",
