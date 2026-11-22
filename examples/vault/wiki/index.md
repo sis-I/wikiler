@@ -1,16 +1,25 @@
 # Wiki Index
 
-Content catalog — one line per page, categorized.
+Content catalog, one line per page, categorized.
 
 ## Sources
-- [[sources/example-article|Example Article]]
+
+- [[sources/quiet-protocol|Quiet Protocol]]
+- [[sources/tidal-sorting|Tidal Sorting]]
 
 ## Entities
-- [[entities/example-entity|Example Entity]]
+
+- [[entities/lumen-council|Lumen Council]]
 
 ## Concepts
-- [[concepts/example-concept|Example Concept]]
+
+- [[concepts/marker-decay|Marker Decay]]
+- [[concepts/quiet-consensus|Quiet Consensus]]
 
 ## Synthesis
 
+- [[synthesis/tidal-quiet-comparison|Tidal Quiet Comparison]]
+
 ## Queries
+
+- [[queries/marker-decay-question|Marker Decay Question]]
