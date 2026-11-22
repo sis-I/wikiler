@@ -5,6 +5,58 @@ new vault by `wiki init` and is the single source of truth for agents
 operating a Wikiler vault. The repository-level `AGENTS.md` (for engine
 contributors) is a separate document.
 
+## Normative vault contract for 0.x
+
+The behavior described in this document is the normative vault contract for
+the first release. It is ratified, not provisional: the engine checks form and
+the agent decides meaning. The no-breaking-change promise covers the vault
+contract only. It does not cover CLI JSON output shape or exit codes. Any
+change to the contract requires an ADR and a version bump.
+
+1. **Directory layout:** `wiki/sources`, `wiki/entities`, `wiki/concepts`,
+   `wiki/synthesis`, and `wiki/queries`, plus `wiki/index.md` and
+   `wiki/log.md`; also `raw/`, `output/`, and `raw/assets/`. This layout is
+   ratified within the parent vault boundary decision.
+2. **Frontmatter fields:** exactly six required fields (`type`, `title`,
+   `sources`, `created`, `updated`, `tags`) and exactly five `type` values
+   (`source`, `entity`, `concept`, `synthesis`, `query`). `query` is a valid
+   `type` but deliberately not a valid H1 suffix. There is no `schema_version`
+   or `schema` field.
+3. **Filename rules:** page files are kebab-case `.md` files. `index.md` and
+   `log.md` are exempt because they are not page files.
+4. **Title Case H1:** the Title Case algorithm is normative. The minor words
+   (`a`, `an`, `the`, `and`, `or`, `but`, `for`, `nor`, `on`, `at`, `to`,
+   `from`, `by`, `with`, `in`, `is`, `of`, `vs`, `vs.`, `&`, `via`, `per`) stay
+   lowercase except as the first or last word. All-caps acronyms and
+   digit-leading tokens are allowed; the first and last words are capitalised.
+   The trailing suffix regex permits `(entity)`, `(concept)`, `(source)`, and
+   `(synthesis)` but deliberately not `(query)`.
+5. **Wikilink grammar, two tiers:** the agent authoring rule is strictly
+   `[[dir/slug|Page Title]]`, where `dir` is one of `sources | entities |
+   concepts | synthesis | queries`. The engine separately tolerates bare
+   stems, the `wiki/` prefix, and WARNING-level form checks as migration
+   affordances repaired by `lint --fix`. Forms outside the authoring rule are
+   non-canonical, accepted for migration, not invalid.
+6. **Source immutability:** `raw/` source files are immutable. The engine may
+   write only downloaded assets to `raw/assets/` and never rewrites, moves,
+   or deletes anything else under `raw/`.
+7. **Index and log semantics:** index entries are `- [[dir/slug|Title]]`
+   under the five capitalised sections. Dangling entries are reported by
+   `sync` and removed only by `lint --fix`. The log vocabulary is
+   `setup | ingest | query | synthesis | sync | lint`. Log links are checked
+   for form only and are never resolved or counted as inbound links. The
+   `ingest` substring dedupe check and the `sync` dated-prefix dedupe check
+   are intentional and distinct, not harmonised. The index template written
+   by `init` uses no em-dash, in line with the Dash Rule.
+8. **Raw asset rules:** images are local-first and opt-in. There is no
+   network access by default; `--download-images` opts in to fetching remote
+   URLs into `raw/assets/`.
+9. **Engine and agent ownership:** the engine may reject or repair form but
+   never decides meaning. Anything that requires judgment is emitted as a
+   suggestion or a `<!-- TODO -->` marker for the agent.
+10. **Scope of the promise:** the no-breaking-change guarantee covers the
+    vault contract only, not CLI JSON output or exit codes.
+
 ## Engine and agent roles
 
 The engine is the mechanical half; the agent is the judgment half. Neither
@@ -79,17 +131,21 @@ Ownership:
 
 ## Links
 
-Use file-path wikilinks only:
+The agent authoring rule is strict: use file-path wikilinks only.
 
 `[[dir/slug|Page Title]]`, where `dir` is one of `sources | entities |
 concepts | synthesis | queries`.
 
-- Valid: `[[concepts/llm-inference-optimization|LLM Inference Optimization]]`
-- Invalid: `[[LLM Inference Optimization]]` (title link),
-  `[[llm-inference-optimization]]` (bare stem),
-  `[[Foo (concept)]]` (title with type suffix).
+- Canonical: `[[concepts/llm-inference-optimization|LLM Inference Optimization]]`
+- Non-canonical, accepted for migration: `[[LLM Inference Optimization]]`
+  (title link), `[[llm-inference-optimization]]` (bare stem),
+  `[[wiki/concepts/llm-inference-optimization|LLM Inference Optimization]]`
+  (`wiki/` prefix).
 
-The display title may keep the type suffix used by the page, for example
+The engine tolerates these migration affordances and reports them at WARNING
+level; `lint --fix` repairs them to the canonical form. Agents must author
+only canonical links and must not rely on that tolerance. The display title
+may keep the type suffix used by the page, for example
 `[[entities/gbrain|GBrain (entity)]]`; the target must always be a path.
 
 ## Operations
@@ -227,11 +283,12 @@ wiki lint [--json] [--fix]
    engine validates that an H1 exists and is Title Case. `created` is set
    once and preserved; `updated` changes on edit.
 4. Use the link grammar `[[dir/slug|Page Title]]`, where `dir` is one of
-   `sources | entities | concepts | synthesis | queries`. Valid:
+   `sources | entities | concepts | synthesis | queries`. Canonical:
    `[[concepts/llm-inference-optimization|LLM Inference Optimization]]`.
-   Invalid: `[[llm-inference-optimization]]` (bare stem),
-   `[[LLM Inference Optimization]]` (title link),
-   `[[Foo (concept)]]` (title with type suffix).
+   Non-canonical, accepted for migration: `[[llm-inference-optimization]]`
+   (bare stem), `[[LLM Inference Optimization]]` (title link),
+   `[[Foo (concept)]]` (title with type suffix), and the `wiki/` prefix.
+   The engine repairs these under `lint --fix`; it does not reject them.
 5. Use kebab-case filenames.
 6. Images are local-first and opt-in. `ingest` performs no network I/O: it
    lists the images the source already references in `raw/assets/` (saved by
@@ -250,3 +307,11 @@ wiki lint [--json] [--fix]
 9. One source at a time; stay involved, read summaries, guide emphasis.
 10. Treat wiki pages as derived-on-demand: regenerate when sources change,
     do not let them rot.
+
+## Dash Rule
+
+Never use em-dashes, en-dashes, or double hyphens as punctuation in
+vault documents or code comments. CLI flags, YAML frontmatter delimiters, and
+`<!-- TODO -->` markers are technical syntax and are exempt. Replace a dash
+used as punctuation with a comma, colon, period, conjugation, or a
+restructured sentence.
