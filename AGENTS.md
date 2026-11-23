@@ -38,6 +38,9 @@ wikiler/
 │       ├── log.py            # append-only dated log entries
 │       ├── output.py         # error reporting, JSON vs human streams
 │       ├── images.py         # local asset listing + opt-in remote download
+│       ├── .agents/
+│       │   └── skills/
+│       │       └── wiki-*/SKILL.md  # packaged skills installed by init
 │       ├── commands/
 │       │   ├── __init__.py
 │       │   ├── init.py
@@ -71,7 +74,7 @@ wikiler/
 The `wikiler` package installs into the user's Python environment. The engine resolves the target vault from `--vault`, `WIKI_VAULT`, or cwd.
 
 - Only `init` may scaffold a vault. Every other command refuses to run outside an initialized vault.
-- The engine writes only under `wiki/` and `output/` of the target vault. `raw/` is human-owned and immutable; the engine may write only downloaded assets to `raw/assets/`.
+- The engine writes only under `wiki/` and `output/` of the target vault, except that `init` writes `<vault>/AGENTS.md` and installs the four skills under `<vault>/.agents/skills/`. `raw/` is human-owned and immutable; the engine may write only downloaded assets to `raw/assets/`.
 - The user's personal main vault stays outside the public project. Its final location is a human decision; the public project never moves, renames, or touches it.
 - Migration of the personal vault is governed by [the private migration ticket](https://github.com/sis-I/pi-wiki-vault/issues/33), not by this document.
 
@@ -97,7 +100,7 @@ wiki sync
 wiki lint [--json] [--fix]
 ```
 
-- `init` scaffolds the vault (subdirectories, index.md, log.md, AGENTS.md copy).
+- `init` scaffolds the vault (subdirectories, index.md, log.md), copies the runtime rules to `AGENTS.md`, and installs the four portable skills under `.agents/skills/`. Existing `AGENTS.md` and skills are preserved; remove a file and re-run `init` to refresh it from the package.
 - `ingest` scaffolds a source page from a raw source. Local-first: no network I/O by default.
 - `query` retrieves candidate pages; never synthesizes an answer.
 - `lint` scans for structural faults; `--fix` repairs unambiguous issues only.
@@ -150,6 +153,7 @@ The test suite runs against temporary vault directories, never the user's real v
 - `docs/agents/issue-tracker.md`: GitHub Issues for `sis-I/wikiler`.
 - `docs/agents/triage-labels.md`: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`.
 - `docs/agents/domain.md`: Single-context domain structure.
+- Repo-root `.agents/skills/wiki-*/SKILL.md` and packaged `src/wikiler/.agents/skills/wiki-*/SKILL.md` are byte-identical. `init` installs the packaged copies into new vaults.
 
 ## Dash Rule
 

@@ -88,6 +88,11 @@ requires reading for sense, the agent owns it.
   `log.md`.
 - `output/`: Reports, query results, generated artifacts.
 
+Engine writes stay under `wiki/` and `output/`, with one exception: `init` also
+writes `<vault>/AGENTS.md` and installs the four skills under
+`<vault>/.agents/skills/`. `raw/` stays human-owned and immutable, apart from
+downloaded assets under `raw/assets/`.
+
 ## Special Files
 
 - `wiki/index.md`: Content catalog, one line per page, categorized.
@@ -157,9 +162,20 @@ Every step is marked with its owner: `[engine]`, `[agent]`, or `[shared]`.
 1. `[engine]` `wiki init` scaffolds `raw/`, `raw/assets/`,
    `wiki/sources/`, `wiki/entities/`, `wiki/concepts/`,
    `wiki/synthesis/`, `wiki/queries/`, `output/`, `wiki/index.md`, and
-   `wiki/log.md`. It logs the operation as `setup`.
+   `wiki/log.md`. It copies `runtime_rules.md` to `<vault>/AGENTS.md` and
+   installs the four skills under `<vault>/.agents/skills/` when those files
+   are missing. It logs the operation as `setup`.
 2. `[agent]` Never run another command against a directory that is not a
    vault. `init` is the only command that creates one.
+
+#### Updating runtime rules and skills
+
+`init` never overwrites an existing `AGENTS.md` or an installed skill, so local
+edits survive re-runs. To adopt updated rules or skills from a newer
+`wikiler`, upgrade the package, delete only the files you want refreshed, then
+re-run `wiki init`. It recreates the missing files from the installed package
+and leaves the rest untouched. Vaults pick up updates file by file, not
+automatically.
 
 ### Ingest (drop source → scaffold → author pages)
 
@@ -246,9 +262,10 @@ Cadence tracking is deferred; it is agent-managed, not engine-enforced.
 
 ## Command Reference
 
-Run from the engine workspace with `--vault <path>`, or set `WIKI_VAULT`.
-This reference is the contract; a missing command is an engine gap, not a
-licence to hand-edit `index.md` or `log.md`.
+Vault resolution order is `--vault` > `WIKI_VAULT` > cwd. Only `init` may
+scaffold a vault; every other command refuses outside one. This reference is
+the contract; a missing command is an engine gap, not a licence to hand-edit
+`index.md` or `log.md`.
 
 ```
 wiki init
