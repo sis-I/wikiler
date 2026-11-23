@@ -1,7 +1,8 @@
 """Vault path resolution, marker detection, and structure scaffolding.
 
 The engine never writes to raw/ directly; raw/ is human-owned and immutable.
-All engine writes go under wiki/ and output/ of the target vault.
+Engine writes go under wiki/ and output/ of the target vault, except that
+init also writes the vault's AGENTS.md and installs .agents/skills/.
 
 Only `init` may scaffold a vault. Other commands resolve the target, check
 for a vault marker, and refuse (without writing anything) when it is absent.

@@ -256,6 +256,7 @@ class TestNonVaultRefusal(unittest.TestCase):
                 ["query", "what is pstack?"],
                 ["lint"],
                 ["lint", "--fix"],
+                ["sync"],
             ]
             for argv in cases:
                 with self.subTest(argv=argv):
@@ -265,8 +266,11 @@ class TestNonVaultRefusal(unittest.TestCase):
                         f"error: not a wiki vault: {vault}", out
                     )
                     self.assertIn("run wiki init first", out)
-                    # No directories or files at any depth.
+                    # No directories or files at any depth, so init's
+                    # AGENTS.md and skills are not installed either.
                     self.assertEqual(list(vault.rglob("*")), [])
+                    self.assertFalse((vault / "AGENTS.md").exists())
+                    self.assertFalse((vault / ".agents").exists())
 
     def test_cwd_non_vault_refuses(self):
         with tempfile.TemporaryDirectory() as tmp:

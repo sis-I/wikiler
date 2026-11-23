@@ -23,7 +23,7 @@ This installs the `wiki` console command.
 ## Quick Start
 
 ```
-# Initialize a vault
+# Initialize a vault; installs AGENTS.md and four skills under .agents/skills/
 wiki init --vault /path/to/my-vault
 
 # Ingest a source
@@ -58,6 +58,13 @@ Then run `wiki ingest` on the source. Ingest performs no network I/O by default:
 
 ```
 my-vault/
+├── AGENTS.md             # runtime rules (installed by init, preserved on re-run)
+├── .agents/
+│   └── skills/
+│       ├── wiki-setup/SKILL.md
+│       ├── wiki-ingest/SKILL.md
+│       ├── wiki-query/SKILL.md
+│       └── wiki-lint/SKILL.md
 ├── raw/
 │   ├── articles/
 │   ├── papers/
@@ -84,6 +91,14 @@ my-vault/
 | `wiki query <question>` | Retrieve candidate pages |
 | `wiki sync` | Reconcile index, frontmatter, log |
 | `wiki lint [--fix]` | Structural health check |
+
+## Portable skills
+
+`wiki init` installs `AGENTS.md` and four skills into `<vault>/.agents/skills/`:
+`wiki-setup`, `wiki-ingest`, `wiki-query`, and `wiki-lint`. A harness opened on
+the vault discovers them from the `Use when` clause in each description. `sync`
+stays CLI-only. Re-running `init` preserves edited `AGENTS.md` and skill files;
+delete a file and re-run `init` to refresh it from the installed package.
 
 ## License
 
