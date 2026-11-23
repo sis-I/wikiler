@@ -59,10 +59,13 @@ wikiler/
 ├── examples/
 │   └── vault/                # sanitized fixture vault for CI acceptance
 ├── docs/
+│   ├── AUTHORITY.md          # authority rank and per-audience index
+│   ├── README.md             # docs tree index
 │   ├── adr/                  # architecture decision records
 │   ├── agents/               # agent contracts (issue tracker, triage labels, domain)
-│   ├── guides/               # corrected implementation guide
-│   └── research/             # Karpathy evidence base
+│   ├── guides/               # normative how-to and getting-started walkthrough
+│   ├── plans/                # internal implementation plans
+│   └── research/             # non-normative evidence and third-party material
 ├── LICENSE                   # MIT
 ├── AGENTS.md                 # this file: rules for engine contributors
 ├── CHANGELOG.md
@@ -143,10 +146,17 @@ The test suite runs against temporary vault directories, never the user's real v
 
 ## Documentation Authority
 
+`docs/AUTHORITY.md` holds the ranked authority table and the per-audience
+"start here" index. It is the entry point for documentation questions. In rank
+order: ADRs, scope-specific canonical specs, normative guides, `README.md` and
+CLI help, `CHANGELOG.md` and release notes, then non-normative research.
+
 - `docs/adr/`: Architecture decision records (numbered, immutable once accepted).
 - `docs/agents/`: Agent contracts (issue-tracker.md, triage-labels.md, domain.md).
-- `docs/guides/`: Corrected implementation guide.
-- `docs/research/`: Evidence base (Karpathy research note).
+- `docs/guides/`: Normative implementation how-to and getting-started walkthrough.
+- `docs/plans/`: Internal implementation plans, below normative guides.
+- `docs/research/`: Non-normative evidence and third-party material.
+- `docs/README.md`: Index for the docs tree.
 
 ## Agent Skills
 

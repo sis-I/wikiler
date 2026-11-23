@@ -100,6 +100,13 @@ the vault discovers them from the `Use when` clause in each description. `sync`
 stays CLI-only. Re-running `init` preserves edited `AGENTS.md` and skill files;
 delete a file and re-run `init` to refresh it from the installed package.
 
+## Documentation
+
+- `docs/guides/GETTING_STARTED.md`: detailed walkthrough from a fresh install to a linted vault.
+- `docs/guides/LLM_WIKI_IMPLEMENTATION_GUIDE.md`: the normative implementation how-to.
+- `docs/AUTHORITY.md`: which documents are normative and where each audience starts.
+- `docs/README.md`: index of the docs tree.
+
 ## License
 
 MIT

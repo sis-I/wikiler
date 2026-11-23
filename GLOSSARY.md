@@ -55,3 +55,32 @@ The append-only timeline that records operations performed on a vault.
 
 A non-text resource, such as an image, referenced by a source or a page and
 kept alongside the source material.
+
+## normative
+
+The canonical source for a topic. A normative document wins conflicts with
+non-normative documents, changes only through an explicit recorded decision,
+and is linked to rather than restated by other documents.
+
+## corrected guide
+
+A normative guide whose claims have been checked against the shipped engine
+and the locked decisions, and clarified editorially where the source material
+was ambiguous.
+
+## third-party claim
+
+A statement about an external project or person that is not a statement about
+Wikiler behavior.
+
+## caveat
+
+A qualification attached to a third-party claim. It records attribution, a
+source URL, and an access date, and states that the claim is illustrative only,
+not Wikiler behavior. A numeric claim also states that the source reports the
+figure and that it was not independently verified.
+
+## status marker
+
+A `Status: <value>` line in a public document that records the document's
+authority status in a form a mechanical check can find without reading prose.

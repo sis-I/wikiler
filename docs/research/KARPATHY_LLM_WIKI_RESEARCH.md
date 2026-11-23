@@ -1,5 +1,18 @@
 # Karpathy LLM Wiki Research
 
+Status: Historical evidence, non-normative
+
+> Non-normative historical snapshot. This note records evidence gathered on
+> 2026-11-16 about the source material and third-party projects. It is evidence,
+> not a specification of Wikiler behavior. Historical `wiki-engine` naming is
+> preserved as part of the snapshot and is not current product naming. Every
+> third-party claim in this note is attributed to the source listed in Primary
+> sources, with its URL and the 2026-11-16 access date, and is illustrative
+> only, not Wikiler behavior. Numeric figures are reported by those sources and
+> were not independently verified. The guide audited here has since moved to
+> `docs/research/KARPATHY_WIKI_IMPLEMENTATION_GUIDE.md`; older path mentions
+> below refer to its pre-move location.
+
 ## Scope
 
 This note answers three questions:

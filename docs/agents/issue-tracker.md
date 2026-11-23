@@ -1,5 +1,7 @@
 # Issue Tracker
 
+Status: Agent contract
+
 Issues for this repository are tracked in GitHub Issues.
 
 - **Type**: GitHub Issues
