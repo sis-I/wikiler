@@ -1,5 +1,7 @@
 # Triage Labels
 
+Status: Agent contract
+
 This repository uses the standard triage label vocabulary:
 
 - `needs-triage`: Newly created issue awaiting review or triage.
